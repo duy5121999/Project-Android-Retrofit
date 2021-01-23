@@ -24,12 +24,17 @@ class MainActivity : AppCompatActivity() {
 
         navigationView.setNavigationItemSelectedListener{
             when (it.itemId) {
-                R.id.actionHome -> d("daniel", "Going home!")
+                R.id.actionHome ->{
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, MainFragment())
+                        .commit()
+//                    d("daniel", "Going home!")
+                }
                 R.id.actionJeans -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frameLayout, JeansFragment())
                         .commit()
-                    d("daniel", "Jeans was pressed!")
+//                    d("daniel", "Jeans was pressed!")
                 }
                 R.id.actionShorts -> {
                     d("daniel", "Shorts was pressed!")
@@ -45,30 +50,10 @@ class MainActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
         }
 
-        val products = arrayListOf<Product>()
-
-        for (i in 0..100){
-            products.add(Product(
-                1.0,
-                "Lamborgini #$i",
-                "http://via.placeholder.com/200x200",
-                "",
-                46.0,
-                239.0
-            ))
-        }
-
-
-        recycler_view.apply {
-            layoutManager = GridLayoutManager(this@MainActivity,2)
-            adapter = ProductsAdapter(products)
-        }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         drawerLayout.openDrawer(GravityCompat.START)
         return true
-//        return super.onOptionsItemSelected(item)
     }
 }
